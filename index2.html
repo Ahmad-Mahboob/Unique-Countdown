@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Monthly Income Projection</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <canvas id="monthlyIncomeChart" width="1000" height="400"></canvas>
+
+  <script>
+    // Monthly timeline labels (Mar 2025 - Feb 2027)
+    const labels = [
+      'Mar 25', 'Apr 25', 'May 25', 'Jun 25', 'Jul 25', 'Aug 25', 'Sep 25', 'Oct 25',
+      'Nov 25', 'Dec 25', 'Jan 26', 'Feb 26', 'Mar 26', 'Apr 26', 'May 26', 'Jun 26',
+      'Jul 26', 'Aug 26', 'Sep 26', 'Oct 26', 'Nov 26', 'Dec 26', 'Jan 27', 'Feb 27'
+    ];
+
+    // Monthly income estimates (PKR lacs)
+    const minMonthly = [
+      0, 0, 0,         // Mar-May 2025 (Phase 1: Skill-building)
+      1.4, 1.4, 1.4, 1.4, 1.4, // Jun-Oct 2025 (Phase 2: Freelancing Launch)
+      2, 2, 2, 2, 2, 2,        // Nov 25-Apr 26 (Phase 3: Scaling Up)
+      5, 5, 5, 5, 5,           // May-Sep 26 (Phase 4: Full-Time Hustle)
+      3, 3, 3, 3, 3            // Oct 26-Feb 27 (Phase 5: Sustain)
+    ];
+
+    const maxMonthly = [
+      0, 0, 0,         // Mar-May 2025
+      2, 2, 2, 2, 2,   // Jun-Oct 2025
+      2.7, 2.7, 2.7, 2.7, 2.7, 2.7, // Nov 25-Apr 26
+      7, 7, 7, 7, 7,    // May-Sep 26
+      4, 4, 4, 4, 4     // Oct 26-Feb 27
+    ];
+
+    const ctx = document.getElementById('monthlyIncomeChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Minimum Monthly Income (PKR Lacs)',
+          data: minMonthly,
+          borderColor: '#4CAF50',
+          backgroundColor: 'rgba(76, 175, 80, 0.2)',
+          fill: true,
+          tension: 0.3
+        },
+        {
+          label: 'Maximum Monthly Income (PKR Lacs)',
+          data: maxMonthly,
+          borderColor: '#2196F3',
+          backgroundColor: 'rgba(33, 150, 243, 0.2)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: false,
+        scales: {
+          y: {
+            title: { display: true, text: 'Monthly Income (PKR Lacs)' },
+            min: 0,
+            max: 8
+          },
+          x: {
+            title: { display: true, text: 'Month' },
+            ticks: { autoSkip: false }
+          }
+        },
+        plugins: {
+          annotation: {
+            annotations: {
+              phase1: {
+                type: 'box',
+                xMin: 'Mar 25',
+                xMax: 'May 25',
+                backgroundColor: 'rgba(200, 200, 200, 0.2)',
+                borderWidth: 0,
+                label: {
+                  content: 'Phase 1: Skill Building',
+                  position: 'start'
+                }
+              },
+              phase4: {
+                type: 'box',
+                xMin: 'May 26',
+                xMax: 'Sep 26',
+                backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                borderWidth: 0,
+                label: {
+                  content: 'Phase 4: Full-Time Hustle',
+                  position: 'end'
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
