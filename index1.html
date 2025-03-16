@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Earnings Roadmap</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <canvas id="earningsChart" width="800" height="400"></canvas>
+
+  <script>
+    // Data based on your roadmap (PKR in lacs)
+    const labels = [
+      'Mar 2025', 'Jun 2025', 'Oct 2025', 
+      'Apr 2026', 'Sep 2026', 'Feb 2027'
+    ];
+
+    const minEarnings = [0, 0, 7, 19, 44, 59]; // Lower estimate (PKR lacs)
+    const maxEarnings = [0, 0, 10, 26, 61, 81]; // Upper estimate (PKR lacs)
+
+    const ctx = document.getElementById('earningsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Minimum Earnings (PKR Lacs)',
+          data: minEarnings,
+          borderColor: '#4CAF50',
+          backgroundColor: 'rgba(76, 175, 80, 0.2)',
+          fill: true,
+          tension: 0.3
+        },
+        {
+          label: 'Maximum Earnings (PKR Lacs)',
+          data: maxEarnings,
+          borderColor: '#2196F3',
+          backgroundColor: 'rgba(33, 150, 243, 0.2)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: false,
+        scales: {
+          y: {
+            title: { display: true, text: 'PKR (Lacs)' },
+            min: 0,
+            max: 90
+          },
+          x: {
+            title: { display: true, text: 'Timeline' }
+          }
+        },
+        plugins: {
+          annotation: {
+            annotations: {
+              goalLine: {
+                type: 'line',
+                yMin: 45,
+                yMax: 45,
+                borderColor: '#FF5722',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                label: {
+                  content: 'Your Goal (45 Lacs)',
+                  position: 'end'
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
